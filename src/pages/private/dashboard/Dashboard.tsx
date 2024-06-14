@@ -1,6 +1,7 @@
 import { SDashboard } from '@/pages/private/dashboard/dashboard.styles.ts';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from 'react';
 
 const Dashboard = () => {
     return (
@@ -38,7 +39,7 @@ const Dashboard = () => {
                     { title: 'event 2', date: '2024-06-12' },
                     { title: 'event 1', date: '2024-06-12' },
                     { title: 'event 2', date: '2024-06-12' },
-                    
+                
                 ]}
                 eventContent={renderEventContent}
             />
@@ -46,7 +47,7 @@ const Dashboard = () => {
     );
 };
 
-function renderEventContent(eventInfo) {
+function renderEventContent(eventInfo: { timeText: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; event: { title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }; }) {
     return (
         <>
             <b>{eventInfo.timeText}</b>
