@@ -8,9 +8,10 @@ build-job:
   image: node:latest
   stage: build
   script:
-    - echo "Compiling the project with Vite..."
+    - echo "Preparing the build environment..."
     - rm -rf node_modules package-lock.json
     - npm install
+    - echo "Compiling the project with Vite..."
     - npm run build
   artifacts:
     paths:
@@ -22,8 +23,10 @@ test-job:
   image: node:latest
   stage: test
   script:
+    - echo "Preparing the test environment..."
+    - rm -rf node_modules package-lock.json
+    - npm install
     - echo "Running tests..."
-    - npm ci
     - npm test
   dependencies:
     - build-job
