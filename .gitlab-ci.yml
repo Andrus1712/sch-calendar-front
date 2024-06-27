@@ -9,6 +9,7 @@ build-job:
     stage: build
     script:
         - echo "Compiling the project with Vite..."
+        - npm i
         - npm ci
         - npm run build
     artifacts:
