@@ -27,6 +27,7 @@ test-job:
     - rm -rf node_modules package-lock.json
     - npm install
     - echo "Running tests..."
+      - node -e "console.log(require('./package.json').scripts.test)"
     - npm test
   dependencies:
     - build-job
