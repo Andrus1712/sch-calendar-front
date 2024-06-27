@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { color, v } from '@/assets/styles/variables.ts';
+import { v } from '@/assets/styles/variables.ts';
 import isPropValid from '@emotion/is-prop-valid';
 import { breakpoints } from '@/assets/styles/screenSize.ts';
+import { color } from '@/assets/styles/colors.ts';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -66,11 +67,11 @@ export const SidebarContainer = styled.div.withConfig({
     }
 
     header {
-        // height: ${v.headerHeight};
+            // height: ${v.headerHeight};
         display: flex;
         align-items: center;
         margin-bottom: ${v.lgSpacing};
-        background: #22228a;
+        background: ${color.secondary};
         width: 100%;
         padding: ${v.smSpacing};
         overflow: hidden;
@@ -142,7 +143,7 @@ export const SItemsNav = styled.nav.withConfig({
         }
 
         span {
-            /*margin-left: ${({ isOpen }) => isOpen ? v.mdSpacing : 'auto'};*/
+                /*margin-left: ${({ isOpen }) => isOpen ? v.mdSpacing : 'auto'};*/
             opacity: ${({ isOpen }) => isOpen ? 1 : 0};
             transition: all 1s ease;
             white-space: nowrap;

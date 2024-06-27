@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 
 export const v = {
-    sidebarWidth: `300px`,
+    sidebarWidth: `250px`,
     sidebarWidthClose: `70px`,
     smSpacing: `8px`,
     mdSpacing: `16px`,
@@ -11,14 +11,6 @@ export const v = {
     borderRadius: `6px`,
     xlBorderRadius: `12px`,
     headerHeight: `60px`,
-};
-
-export const color = {
-    primary: '#3130b4',
-    hover: '#25248a',
-    textPrimary: '#fff',
-    textHover: '#fff73f',
-    white: '#ffffff',
 };
 
 export const btnReset = css`
