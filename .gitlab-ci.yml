@@ -10,7 +10,7 @@ build-job:
   script:
     - echo "Compiling the project with Vite..."
     - rm -rf node_modules package-lock.json
-    - npm ci
+    - npm install
     - npm run build
   artifacts:
     paths:
