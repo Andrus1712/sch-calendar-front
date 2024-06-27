@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { color, v } from '@/assets/styles/variables.ts';
+import { v } from '@/assets/styles/variables.ts';
+import { color } from '@/assets/styles/colors.ts';
 
 export const SHeader = styled.header`
     display: flex;

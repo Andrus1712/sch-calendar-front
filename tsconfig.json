@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "paths": {
       "@/*": [
@@ -31,7 +32,9 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
+    "src",
+    "__tests__/**/*.ts",
+    "__tests__/**/*.tsx"
   ],
   "references": [
     {
