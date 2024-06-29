@@ -1,35 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { authUser } from '@/services/auth.service.ts';
 import axios from 'axios';
-
-export interface ILoginRequest {
-    username: string;
-    password: string;
-}
-
-type Status = 'uninitialized' | 'loading' | 'succeeded' | 'failed';
-
-export interface IAuthState {
-    status: Status;
-    loading: boolean;
-    isAuthenticated: boolean;
-    userData?: IResponseAuth | null;
-    serverError?: ServerError | null;
-}
-
-interface ServerError {
-    code: string;
-    details: string[];
-    message: string;
-    time: string;
-}
-
-interface IResponseAuth {
-    username: string;
-    message: string;
-    jwt: string;
-    status: boolean;
-}
+import { IAuthState, ILoginRequest, IResponseAuth, ServerError } from '@/features/auth/authenticatedTypes.ts';
 
 
 const initialState: IAuthState = {
@@ -67,6 +39,9 @@ const authenticateSlice = createSlice({
             state.userData = null;
             state.serverError = null;
         },
+        setAuthenticated: (state, action: PayloadAction<boolean>) => {
+            state.isAuthenticated = action.payload;
+        },
     },
     extraReducers: builder => {
         builder
@@ -76,7 +51,7 @@ const authenticateSlice = createSlice({
                 state.isAuthenticated = false;
                 state.serverError = null;
             })
-            .addCase(authUserStore.fulfilled, (state, action) => {
+            .addCase(authUserStore.fulfilled, (state, action: PayloadAction<IResponseAuth>) => {
                 state.loading = false;
                 state.status = 'succeeded';
                 state.isAuthenticated = true;
@@ -96,5 +71,5 @@ const authenticateSlice = createSlice({
     },
 });
 
-export const { logout } = authenticateSlice.actions;
+export const { logout, setAuthenticated } = authenticateSlice.actions;
 export default authenticateSlice.reducer;

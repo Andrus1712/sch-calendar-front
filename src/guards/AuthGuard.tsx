@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from '@/hooks/state.hooks.ts';
+import { useAppSelector } from '@/app/hooksStore.ts';
 
 export const AuthGuard = () => {
     const { isAuthenticated } = useAppSelector(state => state.authenticate);

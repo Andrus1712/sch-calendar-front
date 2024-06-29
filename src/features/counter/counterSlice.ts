@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
-import { RootState } from '@/store/store.ts';
+import { RootState } from '@/app/store.ts';
 
 export interface CounterState {
     value: number;

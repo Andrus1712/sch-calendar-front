@@ -1,4 +1,4 @@
-import { SHeader } from '@/layout/header/header.styles.ts';
+import { SHeader } from '@/assets/styles/layout/header/header.styles.ts';
 import { useContext } from 'react';
 import { ApplicationContext } from '@/context/application.context.tsx';
 import { FaBars } from 'react-icons/fa6';

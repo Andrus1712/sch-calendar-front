@@ -1,12 +1,12 @@
-import { Button, Form, Input, InputLabel, Title, Wrapper } from '@/pages/auth/login.styles.ts';
+import { Button, Form, Input, InputLabel, Title, Wrapper } from '@/assets/styles/pages/auth/login.styles.ts';
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/hooks/state.hooks.ts';
-import { authUserStore, logout } from '@/store/slice/authenticate.slice.ts';
+import { authUserStore, logout } from '@/features/auth/authenticateSlice.ts';
 import { useNavigate } from 'react-router-dom';
-import { PRIVATE_ROUTES } from '@/model';
 import ErrorAlert from '@/components/alerts/ErrorAlert.tsx';
 import Spinner from '@/components/spinners/Spinner.tsx';
-import { persistor } from '@/store/store.ts';
+import { persistor } from '@/app/store.ts';
+import { useAppDispatch, useAppSelector } from '@/app/hooksStore.ts';
+import { PRIVATE_ROUTES } from '@/types';
 
 const LoginView = () => {
     const navigate = useNavigate();
@@ -30,6 +30,7 @@ const LoginView = () => {
         await dispatch(authUserStore({ username, password })).unwrap().then(() => {
             setCredentials({ username: '', password: '' });
             navigate(`/${PRIVATE_ROUTES.PRIVATE.path}`, { replace: true });
+            
         }).catch(() => {
             setCredentials({ username: '', password: '' });
         });
@@ -47,6 +48,7 @@ const LoginView = () => {
     const handleLogout = async () => {
         try {
             await persistor.purge();
+            dispatch(logout());
         } catch (error) {
             console.error('Error', error);
         }
@@ -58,6 +60,7 @@ const LoginView = () => {
                 dispatch(logout());
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
     return (
