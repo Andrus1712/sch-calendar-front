@@ -1,4 +1,4 @@
-import { AlertContent, AlertWrapper, Icon } from '@/components/alerts/alert.styles.ts';
+import { AlertContent, AlertWrapper, Icon } from '@/assets/styles/components/alerts/alert.styles.ts';
 
 interface AlertProps {
     message: string;

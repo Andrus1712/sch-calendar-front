@@ -1,4 +1,4 @@
-import api from '@/services/api.ts';
+import axiosConfig from '@/services/axios.config.ts';
 
 interface IResponseAuth {
     'username': string,
@@ -13,7 +13,7 @@ interface IRequestAuth {
 }
 
 const authUser = async (request: IRequestAuth): Promise<IResponseAuth> => {
-    const response = await api.post('/auth/login', request);
+    const response = await axiosConfig.post('/auth/login', request);
     return response.data;
 };
 

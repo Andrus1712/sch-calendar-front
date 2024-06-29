@@ -1,4 +1,4 @@
-import { Loader, SpinnerWrapper } from './spinner.styles';
+import { Loader, SpinnerWrapper } from '@/assets/styles/components/spinners/spinner.styles.ts';
 
 const Spinner = () => {
     return <SpinnerWrapper>

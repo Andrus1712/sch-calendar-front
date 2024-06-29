@@ -4,7 +4,7 @@ import { ApplicationContextProvider } from '@/context/application.context.tsx';
 import { GlobalStyle } from '@/assets/styles/global.styles.ts';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { persistor, store } from '@/store/store.ts';
+import { persistor, store } from '@/app/store.ts';
 
 function App() {
     return (

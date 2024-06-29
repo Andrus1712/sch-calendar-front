@@ -1,4 +1,4 @@
-import { SidebarContainer, SItemsNav } from '@/layout/sidebar/sidebar.styles.tsx';
+import { SidebarContainer, SItemsNav } from '@/assets/styles/layout/sidebar/sidebar.styles.tsx';
 import { FaBars, FaReact } from 'react-icons/fa6';
 import { useContext } from 'react';
 import { ApplicationContext } from '@/context/application.context.tsx';
