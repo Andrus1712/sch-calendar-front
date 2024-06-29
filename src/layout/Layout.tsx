@@ -1,6 +1,6 @@
 import Sidebar from '@/layout/sidebar/Sidebar.tsx';
 import { useContext } from 'react';
-import { SLayout, SMain, SMainContent } from '@/layout/layout.styles.ts';
+import { SLayout, SMain, SMainContent } from '@/assets/styles/layout/layout.styles.ts';
 import Header from '@/layout/header/Header.tsx';
 import { ApplicationContext } from '@/context/application.context.tsx';
 
