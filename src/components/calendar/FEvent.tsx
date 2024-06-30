@@ -1,10 +1,14 @@
-const FEvent = () => {
+import { EventContentArg } from '@fullcalendar/core';
+
+interface Props {
+    eventInfo: EventContentArg;
+}
+
+const FEvent = ({ eventInfo }: Props) => {
     return (
         <>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <b>Tittle event</b>
-                <i>description</i>
-                <a>2024-12-23</a>
+                <pre>{JSON.stringify(eventInfo.event, null, 2)}</pre>
             </div>
         </>
     );

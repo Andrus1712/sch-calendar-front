@@ -1,14 +1,17 @@
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
 import { useEffect, useRef, useState } from 'react';
-import { CalendarApi } from '@fullcalendar/core';
+import { CalendarApi, EventContentArg, EventInput } from '@fullcalendar/core';
 import FEvent from '@/components/calendar/FEvent.tsx';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 import { useCreateScheduleMutation, useGetAllSchedulesQuery } from '@/features/schedule/scheduleApi.ts';
+import { ISchedule } from '@/features/schedule/scheduleTypes.ts';
+import { color } from '@/assets/styles/colors.ts';
 
 const FCalendar = () => {
     const calendarRef = useRef<FullCalendar>(null);
+    const [events, setEvents] = useState<EventInput[]>([]);
     
     
     // const [pollingInterval] = useState(100000);
@@ -47,7 +50,27 @@ const FCalendar = () => {
     useEffect(() => {
         const calendarApi: CalendarApi | undefined = calendarRef.current?.getApi();
         calendarApi?.updateSize();
-    }, []);
+        
+        if (schedules) {
+            const transformedEvents: EventInput[] = schedules.map((el: ISchedule) => {
+                return {
+                    id: el.id !== null ? String(el.id) : undefined,
+                    title: el.title,
+                    description: el.description,
+                    date: el.startTime?.split(' ')[0] ?? undefined,
+                    start: el.startTime ?? undefined,
+                    end: el.endTime ?? undefined,
+                    backgroundColor: color.primary,
+                    interactive: true,
+                };
+            });
+            setEvents(transformedEvents);
+        }
+    }, [schedules]);
+    
+    const renderEventContent = (eventInfo: EventContentArg) => {
+        return <FEvent eventInfo={eventInfo} />;
+    };
     
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>
@@ -91,24 +114,9 @@ const FCalendar = () => {
                 height="auto"
                 plugins={[dayGridPlugin]}
                 initialView="dayGridMonth"
-                weekends={false}
-                events={[
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                
-                ]}
-                eventContent={<FEvent />}
+                weekends={true}
+                events={events}
+                eventContent={renderEventContent}
             />
         </>
     );

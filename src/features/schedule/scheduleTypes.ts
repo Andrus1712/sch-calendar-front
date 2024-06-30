@@ -1,5 +1,5 @@
 export interface ISchedule {
-    id?: bigint | null,
+    id?: number,
     title: string,
     description: string | null,
     startTime: string | null,
