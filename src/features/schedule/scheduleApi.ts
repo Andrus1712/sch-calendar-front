@@ -1,5 +1,5 @@
-import { ISchedule } from '@/types/schedule.types.ts';
 import { api } from '@/services/api.ts';
+import { ISchedule } from '@/features/schedule/scheduleTypes.ts';
 
 export const scheduleApi = api.injectEndpoints({
     endpoints: (builder) => ({

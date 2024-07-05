@@ -1,51 +1,25 @@
 import dayGridPlugin from '@fullcalendar/daygrid';
 import FullCalendar from '@fullcalendar/react';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import { useEffect, useRef, useState } from 'react';
 import { CalendarApi, EventContentArg, EventInput } from '@fullcalendar/core';
 import FEvent from '@/components/calendar/FEvent.tsx';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { SerializedError } from '@reduxjs/toolkit';
-import { useCreateScheduleMutation, useGetAllSchedulesQuery } from '@/features/schedule/scheduleApi.ts';
+import { useGetAllSchedulesQuery } from '@/features/schedule/scheduleApi.ts';
 import { ISchedule } from '@/features/schedule/scheduleTypes.ts';
 import { color } from '@/assets/styles/colors.ts';
+import esLocale from '@fullcalendar/core/locales/es';
+import { Button } from 'flowbite-react';
+import NewEventForm from '@/components/events/NewEventForm.tsx';
+/*import Modal from '@/components/modals/Modal.tsx';*/
 
 const FCalendar = () => {
     const calendarRef = useRef<FullCalendar>(null);
     const [events, setEvents] = useState<EventInput[]>([]);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     
     
     // const [pollingInterval] = useState(100000);
     const { data: schedules, error, isLoading } = useGetAllSchedulesQuery(undefined);
-    
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [endTime, setEndTime] = useState('');
-    const [statusSchedule, setStatus] = useState('');
-    
-    
-    const [createSchedule, {
-        isLoading: createScheduleIsLoading,
-        isError: createScheduleIsError,
-        error: createScheduleError,
-    }] = useCreateScheduleMutation();
-    
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        
-        try {
-            await createSchedule({
-                title,
-                description,
-                startTime,
-                endTime,
-                status: statusSchedule,
-                scheduleTypeId: 1,
-            }).unwrap();
-        } catch (error) {
-            console.error('Error creating schedule:', error);
-        }
-    };
     
     useEffect(() => {
         const calendarApi: CalendarApi | undefined = calendarRef.current?.getApi();
@@ -68,6 +42,10 @@ const FCalendar = () => {
         }
     }, [schedules]);
     
+    const handleNewEeventClick = () => {
+        setIsOpen(true);
+    };
+    
     const renderEventContent = (eventInfo: EventContentArg) => {
         return <FEvent eventInfo={eventInfo} />;
     };
@@ -78,61 +56,41 @@ const FCalendar = () => {
         Error loading posts</div>;
     return (
         <>
-            <pre>{JSON.stringify(schedules, null, 2)}</pre>
+            <div className="flex items-center justify-end">
+                <Button onClick={() => setIsOpen(true)}>New Event</Button>
+            </div>
+            <NewEventForm isOpen={isOpen} setIsOpen={setIsOpen} />
             
-            
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
-                       placeholder="Title" />
-                <input type="text" value={description} onChange={(e) => setDescription(e.target.value)}
-                       placeholder="Description" />
-                <input type="text" value={startTime} onChange={(e) => setStartTime(e.target.value)}
-                       placeholder="Start Time" />
-                <input type="text" value={endTime} onChange={(e) => setEndTime(e.target.value)}
-                       placeholder="End Time" />
-                <input type="text" value={statusSchedule} onChange={(e) => setStatus(e.target.value)}
-                       placeholder="Status" />
-                
-                <button type="submit" disabled={createScheduleIsLoading}>Create Schedule</button>
-                
-                {createScheduleIsError && (
-                    <p>Error: {getErrorErrorMessage(createScheduleError)}</p>
-                )}
-                {createScheduleIsLoading && <p>Creating Schedule...</p>}
-            </form>
             <FullCalendar
                 ref={calendarRef}
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth',
+                customButtons={{
+                    createEventButton: {
+                        text: 'Nuevo evento',
+                        click: handleNewEeventClick,
+                    },
                 }}
+                headerToolbar={{
+                    left: 'dayGridMonth,timeGridWeek,timeGridDay',
+                    center: 'title',
+                    end: 'createEventButton prevYear,prev,next,nextYear',
+                }}
+                expandRows={true}
                 editable={true}
                 selectable={true}
                 selectMirror={true}
                 dayMaxEventRows={5}
                 height="auto"
-                plugins={[dayGridPlugin]}
+                plugins={[dayGridPlugin, timeGridPlugin]}
                 initialView="dayGridMonth"
                 weekends={true}
                 events={events}
-                eventContent={renderEventContent}
+                // eventContent={renderEventContent}
+                themeSystem={'standard'}
+                locale={esLocale}
+                timeZone="America/Bogota"
             />
         </>
     );
-};
-
-// Función para obtener el mensaje de error adecuado
-const getErrorErrorMessage = (error: FetchBaseQueryError | SerializedError | undefined) => {
-    if (error && 'status' in error && 'data' in error) {
-        // Error de FetchBaseQueryError
-        return `Status: ${error.status}, Error: ${JSON.stringify(error.data)}`;
-    } else if (error && 'message' in error) {
-        // Error de SerializedError
-        return error.message;
-    } else {
-        return 'Unknown error occurred';
-    }
 };
 
 export default FCalendar;

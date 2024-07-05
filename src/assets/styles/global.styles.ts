@@ -12,4 +12,10 @@ export const GlobalStyle = createGlobalStyle`
         height: 100%;
         width: 100vw;
     }
+
+    .fc { /* the calendar root */
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
 `

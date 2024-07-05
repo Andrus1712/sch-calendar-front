@@ -11,7 +11,8 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen }: SidebarProps) => {
     const { screenSize, toggleSidebar } = useContext(ApplicationContext);
-    return (<SidebarContainer isOpen={sidebarOpen}>
+    return (
+        <SidebarContainer isOpen={sidebarOpen}>
             {screenSize <= 768 ? <div id="close-icon-mobile">
                 <button onClick={() => toggleSidebar()}><FaBars /></button>
             </div> : null}

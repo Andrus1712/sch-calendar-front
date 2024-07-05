@@ -1,13 +1,6 @@
 import { isRejectedWithValue, Middleware } from '@reduxjs/toolkit';
 import { setAuthenticated } from '@/features/auth/authenticateSlice.ts';
-
-
-interface APIErrorResponse {
-    code: string;
-    message: string;
-    details: string[];
-    time: string;
-}
+import { APIErrorResponse } from '@/app/types.ts';
 
 export const authErrorMiddleware: Middleware = ({ dispatch }) => (next) => (action) => {
     if (isRejectedWithValue(action)) {

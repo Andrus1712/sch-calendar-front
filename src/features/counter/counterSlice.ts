@@ -1,11 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store.ts';
+import { CounterState } from '@/store/slice/counter.slice.ts';
 
-export interface CounterState {
-    value: number;
-    status: string;
-    error: string | SerializedError | null;
-}
 
 const initialState: CounterState = {
     status: 'uninitialized',
