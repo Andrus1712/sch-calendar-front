@@ -10,7 +10,7 @@ import { color } from '@/assets/styles/colors.ts';
 import esLocale from '@fullcalendar/core/locales/es';
 import NewEventForm from '@/components/events/NewEventForm.tsx';
 import InfoEventModal from '@/components/modals/InfoEventModal.tsx';
-import PopupModal from '@/components/modals/PopupModal.tsx';
+import DeleteAlert from '@/components/alerts/DeleteAlert.tsx';
 /*import Modal from '@/components/modals/Modal.tsx';*/
 
 const FCalendar = () => {
@@ -20,7 +20,8 @@ const FCalendar = () => {
     
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState(false);
-    const [openPopupModal, setOpenPopupModal] = useState(false);
+    
+    const [deleteEvent, setDeteleteEvent] = useState<boolean>(false);
     
     // const [pollingInterval] = useState(100000);
     const { data: schedules, error, isLoading } = useGetAllSchedulesQuery(undefined);
@@ -46,11 +47,11 @@ const FCalendar = () => {
         }
     }, [schedules]);
     
-    const handleNewEeventClick = () => {
+    const handleNewEventClick = () => {
         setIsOpen(true);
     };
     
-    const handleShowEeventInfo = (info: EventClickArg) => {
+    const handleShowEventInfo = (info: EventClickArg) => {
         const idEvent: number = Number(info.event.id);
         const event = schedules?.find((el: ISchedule) => el.id === idEvent);
         if (event) {
@@ -58,9 +59,13 @@ const FCalendar = () => {
             setOpenModal(true);
         }
     };
-    const handleConfirm = () => {
-        // Lógica para confirmar la acción
-        setOpenPopupModal(false);
+    
+    const handleConfirmDelete = (confirmDelete: boolean) => {
+        if (confirmDelete) {
+            console.log('Eliminamos ek evento....');
+        } else {
+            setDeteleteEvent(false);
+        }
     };
     
     /*const renderEventContent = (eventInfo: EventContentArg) => {
@@ -75,25 +80,21 @@ const FCalendar = () => {
         <>
             <NewEventForm isOpen={isOpen} setIsOpen={setIsOpen} />
             
-            {/*Componente del modal*/}
+            {/*Component del modal*/}
             {currentEvent &&
-                <InfoEventModal openModal={openModal} setOpenModal={setOpenModal} currentEvent={currentEvent} />
+                <InfoEventModal openModal={openModal} setOpenModal={setOpenModal} currentEvent={currentEvent}
+                                deleteEvent={setDeteleteEvent} />
             }
             
-            <PopupModal isOpen={openPopupModal}
-                        onClose={() => setOpenPopupModal(false)}
-                        title="Delete Confirmation"
-                        message="Are you sure you want to delete this product?"
-                        confirmText="Yes, I'm sure"
-                        cancelText="No, cancel"
-                        onConfirm={handleConfirm} />
+            <DeleteAlert openModal={deleteEvent} setOpenModal={() => setDeteleteEvent(false)}
+                         setConfirm={handleConfirmDelete} />
             
             <FullCalendar
                 ref={calendarRef}
                 customButtons={{
                     createEventButton: {
                         text: 'Nuevo evento',
-                        click: handleNewEeventClick,
+                        click: handleNewEventClick,
                     },
                 }}
                 headerToolbar={{
@@ -119,7 +120,7 @@ const FCalendar = () => {
                 eventClassNames={
                     'bg-transparent hover:bg-slate-800/60 p-1 text-xs border-none'
                 }
-                eventClick={handleShowEeventInfo}
+                eventClick={handleShowEventInfo}
             />
         </>
     );

@@ -6,12 +6,13 @@ interface ModalProps {
     openModal: boolean,
     currentEvent: ISchedule,
     
+    deleteEvent(deleteItem: boolean): void,
+    
     setOpenModal(openModal: boolean): void
 }
 
 
-const InfoEventModal = ({ openModal, setOpenModal, currentEvent }: ModalProps) => {
-    // const [openModal, setOpenModal] = useState(true);
+const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: ModalProps) => {
     
     return (
         <Modal show={openModal} onClose={() => setOpenModal(false)}>
@@ -50,7 +51,7 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent }: ModalProps) =
             </Modal.Body>
             <Modal.Footer>
                 <Button size="sm" color="info"><FaPencil className="mr-2" />Editar</Button>
-                <Button size="sm" color="failure"><FaTrash className="mr-2" />Eliminar</Button>
+                <Button size="sm" color="failure" onClick={() => deleteEvent(true)}><FaTrash className="mr-2" />Eliminar</Button>
                 <Button size="sm" color="light" onClick={() => setOpenModal(false)}>Cerrar</Button>
             </Modal.Footer>
         </Modal>);
