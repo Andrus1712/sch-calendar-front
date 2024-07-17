@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { ApplicationContext } from '@/context/application.context.tsx';
 import { NavLink } from 'react-router-dom';
 import { FaCog, FaHome, FaUser } from 'react-icons/fa';
+import { Sidebar as SidebarFlowbite } from 'flowbite-react';
 
 interface SidebarProps {
     sidebarOpen: boolean;
@@ -11,6 +12,7 @@ interface SidebarProps {
 
 const Sidebar = ({ sidebarOpen }: SidebarProps) => {
     const { screenSize, toggleSidebar } = useContext(ApplicationContext);
+    
     return (
         <SidebarContainer isOpen={sidebarOpen}>
             {screenSize <= 768 ? <div id="close-icon-mobile">
@@ -22,32 +24,30 @@ const Sidebar = ({ sidebarOpen }: SidebarProps) => {
                 </div>
                 <h3>HEADER SIDEBAR</h3>
             </header>
-            
             <SItemsNav isOpen={sidebarOpen}>
-                <ul>
-                    <li>
-                        <NavLink to="dashboard" className="nav-link">
-                            <FaHome className="nav-icon" />
-                            <span>Home</span>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="users" className="nav-link">
-                            <FaUser className="nav-icon" />
-                            <span>Users</span>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="config" className="nav-link">
-                            <FaCog className="nav-icon" />
-                            <span>Config</span>
-                        </NavLink>
-                    </li>
-                </ul>
-            
+                <SidebarFlowbite className={'felx w-full items-center justify-center'}>
+                    <SidebarFlowbite.Items>
+                        <SidebarFlowbite.ItemGroup>
+                            <NavLink to="dashboard" className="nav-link flex items-center justify-start w-full mb-2">
+                                <FaHome className="nav-icon" />
+                                <span>Home</span>
+                            </NavLink>
+                            <NavLink to="users" className="nav-link">
+                                <FaUser className="nav-icon" />
+                                <span>Users</span>
+                            </NavLink>
+                            <NavLink to="config" className="nav-link">
+                                <FaCog className="nav-icon" />
+                                <span>Config</span>
+                            </NavLink>
+                        
+                        </SidebarFlowbite.ItemGroup>
+                    </SidebarFlowbite.Items>
+                </SidebarFlowbite>
             </SItemsNav>
         </SidebarContainer>
-    );
+    )
+        ;
 };
 
 export default Sidebar;

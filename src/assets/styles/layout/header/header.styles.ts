@@ -5,7 +5,9 @@ import { color } from '@/assets/styles/colors.ts';
 export const SHeader = styled.header`
     display: flex;
     height: ${v.headerHeight};
+    min-height: ${v.headerHeight};
     background: ${color.white};
+    z-index: 10;
     padding: ${v.smSpacing};
     width: 100%;
     align-items: center;

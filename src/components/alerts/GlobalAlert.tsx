@@ -17,6 +17,17 @@ const GlobalAlert: React.FC = () => {
         if (show) {
             switch (type) {
                 case 'success':
+                    toast.success(ToastContent({ message, code }), {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'light',
+                        transition: Bounce,
+                    });
                     break;
                 case 'error':
                     toast.error(ToastContent({ message, code }), {
@@ -32,8 +43,30 @@ const GlobalAlert: React.FC = () => {
                     });
                     break;
                 case 'info':
+                    toast.info(ToastContent({ message, code }), {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'light',
+                        transition: Bounce,
+                    });
                     break;
                 case 'warning':
+                    toast.warning(ToastContent({ message, code }), {
+                        position: 'top-right',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'light',
+                        transition: Bounce,
+                    });
                     break;
                 default:
                     break;
@@ -48,7 +81,7 @@ const GlobalAlert: React.FC = () => {
     
     
     return (
-        <ToastContainer stacked />
+        <ToastContainer />
     );
 };
 

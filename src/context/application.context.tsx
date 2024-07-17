@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { AppContextType } from '../types';
+import { AppContextType } from '@/types';
 import { getCurrentDimension } from '@/utils';
 
 

@@ -41,7 +41,7 @@ const NewEventForm = ({ isOpen, setIsOpen }: Props) => {
                     description,
                     startTime: `${dateFormat} ${startTime}`,
                     endTime: `${dateFormat} ${endTime}`,
-                    status: "",
+                    status: "PENDING",
                     scheduleTypeId: 1,
                 }).unwrap();
                 setIsOpen(false);

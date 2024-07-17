@@ -10,7 +10,7 @@ export interface ScheduleAction extends PayloadAction<{ status: number; data: AP
 
 export const handleScheduleApi = (storeAPI: MiddlewareAPI<Dispatch, any>, action: ScheduleAction) => {
     if (scheduleApi.endpoints.createSchedule.matchRejected(action)) {
-        alert("Error!")
+        alert('Error!');
         const error = action.payload as { status: number, data: APIErrorResponse };
         const messageContent: IAlertState = {
             message: error.data.message,
@@ -32,14 +32,14 @@ export const handleScheduleApi = (storeAPI: MiddlewareAPI<Dispatch, any>, action
             show: true,
         };
         storeAPI.dispatch(setMessage(messageContent));
-    } else if (scheduleApi.endpoints.getAllSchedules.matchFulfilled(action)) {
+    } else if (scheduleApi.endpoints.createSchedule.matchFulfilled(action)) {
         // const data = action.payload as ISchedule[];
         const messageContent: IAlertState = {
-            message: 'data query success',
-            code: '123',
-            timestamp: '123',
-            details: '123',
-            type: 'error',
+            message: 'Tarea creada',
+            code: 'OK',
+            timestamp: new Date().toLocaleDateString(),
+            details: "",
+            type: 'success',
             show: true,
         };
         storeAPI.dispatch(setMessage(messageContent));

@@ -8,7 +8,7 @@ const BreadcrumbComponent = () => {
     const segments = pathname.split('/');
     
     return <Breadcrumb aria-label="Default background breadcrumb example"
-                       className="px-5 py-3">
+                       className="px-5 py-3 bg-slate-50">
         {segments.map((segment, i) => {
             if (segment !== '') {
                 let route = segment;
@@ -16,7 +16,7 @@ const BreadcrumbComponent = () => {
                     route = '';
                 }
                 return <Breadcrumb.Item key={i} icon={HiHome}>
-                    <NavLink to={route} replace={true}>
+                    <NavLink to={route} replace={true} className="cursor-pointer">
                         {segment}
                     </NavLink>
                 </Breadcrumb.Item>;
