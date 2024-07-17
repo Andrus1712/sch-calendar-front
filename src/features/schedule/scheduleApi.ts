@@ -18,7 +18,14 @@ export const scheduleApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Schedule'],
         }),
+        deleteSchedule: builder.mutation<ISchedule, number>({
+            query: (id) => ({
+                url: `schedule/delete/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Schedule'],
+        }),
     }),
 });
 
-export const { useGetAllSchedulesQuery, useCreateScheduleMutation } = scheduleApi;
+export const { useGetAllSchedulesQuery, useCreateScheduleMutation, useDeleteScheduleMutation } = scheduleApi;

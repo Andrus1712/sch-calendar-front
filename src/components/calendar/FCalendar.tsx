@@ -4,7 +4,7 @@ import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useEffect, useRef, useState } from 'react';
 import { CalendarApi, EventClickArg, EventInput } from '@fullcalendar/core';
-import { useGetAllSchedulesQuery } from '@/features/schedule/scheduleApi.ts';
+import { useDeleteScheduleMutation, useGetAllSchedulesQuery } from '@/features/schedule/scheduleApi.ts';
 import { ISchedule } from '@/features/schedule/scheduleTypes.ts';
 import { color } from '@/assets/styles/colors.ts';
 import esLocale from '@fullcalendar/core/locales/es';
@@ -25,6 +25,7 @@ const FCalendar = () => {
     
     // const [pollingInterval] = useState(100000);
     const { data: schedules, error, isLoading } = useGetAllSchedulesQuery(undefined);
+    const [deleteSchedule] = useDeleteScheduleMutation();
     
     useEffect(() => {
         const calendarApi: CalendarApi | undefined = calendarRef.current?.getApi();
@@ -60,9 +61,13 @@ const FCalendar = () => {
         }
     };
     
-    const handleConfirmDelete = (confirmDelete: boolean) => {
+    const handleConfirmDelete = async (confirmDelete: boolean) => {
         if (confirmDelete) {
-            console.log('Eliminamos ek evento....');
+            if (currentEvent?.id) {
+                await deleteSchedule(currentEvent.id).unwrap();
+                setDeteleteEvent(false);
+                setOpenModal(false);
+            }
         } else {
             setDeteleteEvent(false);
         }

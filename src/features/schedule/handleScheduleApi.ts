@@ -1,4 +1,4 @@
-import { Dispatch, MiddlewareAPI, PayloadAction } from '@reduxjs/toolkit';
+import { MiddlewareAPI, PayloadAction } from '@reduxjs/toolkit';
 import { scheduleApi } from '@/features/schedule/scheduleApi.ts';
 import { IAlertState, setMessage } from '@/features/alert/alertSlice.ts';
 import { APIErrorResponse } from '@/app/types.ts';
@@ -8,7 +8,7 @@ export interface ScheduleAction extends PayloadAction<{ status: number; data: AP
 }
 
 
-export const handleScheduleApi = (storeAPI: MiddlewareAPI<Dispatch, any>, action: ScheduleAction) => {
+export const handleScheduleApi = (storeAPI: MiddlewareAPI, action: ScheduleAction) => {
     if (scheduleApi.endpoints.createSchedule.matchRejected(action)) {
         alert('Error!');
         const error = action.payload as { status: number, data: APIErrorResponse };
@@ -36,9 +36,31 @@ export const handleScheduleApi = (storeAPI: MiddlewareAPI<Dispatch, any>, action
         // const data = action.payload as ISchedule[];
         const messageContent: IAlertState = {
             message: 'Tarea creada',
-            code: 'OK',
+            code: '',
             timestamp: new Date().toLocaleDateString(),
-            details: "",
+            details: '',
+            type: 'success',
+            show: true,
+        };
+        storeAPI.dispatch(setMessage(messageContent));
+    } else if (scheduleApi.endpoints.deleteSchedule.matchRejected(action)) {
+        const error = action.payload as { status: number, data: APIErrorResponse };
+        const messageContent: IAlertState = {
+            message: error.data.message,
+            code: error.data.code,
+            timestamp: error.data.time,
+            details: error.data.details.join(', '),
+            type: 'error',
+            show: true,
+        };
+        storeAPI.dispatch(setMessage(messageContent));
+    } else if (scheduleApi.endpoints.deleteSchedule.matchFulfilled(action)) {
+        // const data = action.payload as ISchedule[];
+        const messageContent: IAlertState = {
+            message: 'Evento eliminado',
+            code: '',
+            timestamp: new Date().toLocaleDateString(),
+            details: '',
             type: 'success',
             show: true,
         };
