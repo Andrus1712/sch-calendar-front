@@ -1,8 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAppSelector } from '@/app/hooksStore.ts';
 
 export const AuthGuard = () => {
+    const { isAuthenticated } = useAppSelector(state => state.authenticate);
     return (
-        <Outlet />
+        isAuthenticated ? <Outlet /> : <Navigate replace to="/login" />
     );
 };
 

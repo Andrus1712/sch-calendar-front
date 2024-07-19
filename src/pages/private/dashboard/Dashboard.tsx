@@ -1,59 +1,31 @@
-import { SDashboard } from '@/pages/private/dashboard/dashboard.styles.ts';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from 'react';
+import { Card, Tabs, TabsRef } from 'flowbite-react';
+import FCalendar from '@/components/calendar/FCalendar.tsx';
+import { FaCalendarDays, FaCubes } from 'react-icons/fa6';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 const Dashboard = () => {
+    const tabsRef = useRef<TabsRef>(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_activeTab, setActiveTab] = useState<number>(0);
+    
+    useLayoutEffect(() => {
+        tabsRef.current?.setActiveTab(1);
+    }, []);
+    
     return (
-        <SDashboard>
-            <FullCalendar
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth',
-                }}
-                editable={true}
-                selectable={true}
-                selectMirror={true}
-                dayMaxEventRows={5}
-                // height="auto"
-                plugins={[dayGridPlugin]}
-                initialView="dayGridMonth"
-                weekends={false}
-                events={[
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
-                    { title: 'event 1', date: '2024-06-12' },
-                    { title: 'event 2', date: '2024-06-12' },
+        <Card className="max-w-full">
+            <Tabs aria-label="Tabs with underline" variant="underline" ref={tabsRef}
+                  onActiveTabChange={(tab) => setActiveTab(tab)}>
+                <Tabs.Item title="Dashboard" icon={FaCubes}>
                 
-                ]}
-                eventContent={renderEventContent}
-            />
-        </SDashboard>
-    );
+                </Tabs.Item>
+                <Tabs.Item title="Calendar" icon={FaCalendarDays}>
+                    <FCalendar />
+                </Tabs.Item>
+            </Tabs>
+        </Card>
+    )
+        ;
 };
-
-function renderEventContent(eventInfo: { timeText: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; event: { title: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; }; }) {
-    return (
-        <>
-            <b>{eventInfo.timeText}</b>
-            <i>{eventInfo.event.title}</i>
-        </>
-    );
-}
 
 export default Dashboard;
