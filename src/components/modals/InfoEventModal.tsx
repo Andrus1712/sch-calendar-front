@@ -3,6 +3,7 @@ import { ISchedule } from '@/features/schedule/scheduleTypes.ts';
 import { FaPencil, FaTrash } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
+import { useUpdateScheduleMutation } from '@/features/schedule/scheduleApi.ts';
 
 interface ModalProps {
     openModal: boolean,
@@ -22,7 +23,9 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
     const [endTime, setEndTime] = useState<string>(format(new Date(), 'HH:mm:ss'));
     const [date, setDate] = useState<Date | null>(new Date());
     const [typeSchedule, setTypeSchedule] = useState<number>(0);
-    const [status, setStatus] = useState<string>("");
+    const [status, setStatus] = useState<string>('');
+    
+    const [updateSchedule] = useUpdateScheduleMutation();
     
     useEffect(() => {
         if (currentEvent) {
@@ -54,9 +57,30 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
         setDate(date);
     };
     
-    const sendEditEvent = () => {
-    
-    }
+    const sendEditEvent = async () => {
+        if (currentEvent.id) {
+            let dateFormat;
+            if (date) {
+                dateFormat = format(date.toLocaleDateString(), 'y-MM-dd');
+                const editedData: ISchedule = {
+                    title,
+                    description,
+                    startTime: `${dateFormat} ${startTime}`,
+                    endTime: `${dateFormat} ${endTime}`,
+                    status: 'PENDING',
+                    scheduleTypeId: 1,
+                    scheduleTypeDescription: '',
+                };
+                await updateSchedule({
+                    id: currentEvent.id,
+                    data: editedData,
+                }).unwrap();
+                setModeEdit(false);
+                setOpenModal(false);
+            }
+            
+        }
+    };
     
     return (
         <Modal show={openModal} onClose={() => setOpenModal(false)}>

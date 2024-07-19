@@ -65,5 +65,26 @@ export const handleScheduleApi = (storeAPI: MiddlewareAPI, action: ScheduleActio
             show: true,
         };
         storeAPI.dispatch(setMessage(messageContent));
+    } else if (scheduleApi.endpoints.updateSchedule.matchRejected(action)) {
+        const error = action.payload as { status: number, data: APIErrorResponse };
+        const messageContent: IAlertState = {
+            message: error.data.message,
+            code: error.data.code,
+            timestamp: error.data.time,
+            details: error.data.details.join(', '),
+            type: 'error',
+            show: true,
+        };
+        storeAPI.dispatch(setMessage(messageContent));
+    } else if (scheduleApi.endpoints.updateSchedule.matchFulfilled(action)) {
+        const messageContent: IAlertState = {
+            message: 'Evento Actualizado',
+            code: '',
+            timestamp: new Date().toLocaleDateString(),
+            details: '',
+            type: 'success',
+            show: true,
+        };
+        storeAPI.dispatch(setMessage(messageContent));
     }
 };
