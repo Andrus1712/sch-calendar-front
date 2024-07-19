@@ -25,6 +25,14 @@ export const scheduleApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Schedule'],
         }),
+        updateSchedule: builder.mutation<void, Partial<ISchedule>>({
+            query: (schedule: ISchedule) => ({
+                url: `schedule/update/${null}`,
+                method: 'PUT',
+                body: schedule,
+            }),
+            invalidatesTags: ['Schedule'],
+        }),
     }),
 });
 
