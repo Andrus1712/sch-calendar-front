@@ -7,9 +7,15 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Roboto Light', sans-serif;
         letter-spacing: 1px;
         height: 100%;
         width: 100vw;
     }
+
+    .fc { /* the calendar root */
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
 `

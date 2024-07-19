@@ -3,7 +3,8 @@ import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 
 import { thunk } from 'redux-thunk';
 import { api } from '@/services/api.ts';
 import rootReducer from '@/app/rootReducer.ts';
-import { authErrorMiddleware } from '@/app/middlewareStore.ts'; // defaults to localStorage for web
+import { authErrorMiddleware } from '@/app/middlewareStore.ts';
+import { alertModdlewareStore } from '@/app/alertModdlewareStore.ts'; // defaults to localStorage for web
 
 export const store = configureStore({
     reducer: rootReducer,
@@ -13,7 +14,7 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         })
-        .concat(thunk, api.middleware, authErrorMiddleware),
+        .concat(thunk, api.middleware, authErrorMiddleware, alertModdlewareStore),
     devTools: import.meta.env.VITE_APP_ENV !== 'production',
 });
 

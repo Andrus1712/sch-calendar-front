@@ -5,6 +5,8 @@ import { GlobalStyle } from '@/assets/styles/global.styles.ts';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from '@/app/store.ts';
+import '@/assets/css/tailwind.css';
+import GlobalSpinner from '@/components/spinners/GlobalSpinner.tsx';
 
 function App() {
     return (
@@ -19,11 +21,13 @@ function App() {
                     href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
                     rel="stylesheet"
                 />
+                
             </Helmet>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     <ApplicationContextProvider>
                         <Routes />
+                        <GlobalSpinner />
                     </ApplicationContextProvider>
                 </PersistGate>
             </Provider>

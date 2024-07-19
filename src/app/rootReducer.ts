@@ -1,5 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import counterReducer from '@/features/counter/counterSlice.ts';
+import alertReducer from '@/features/alert/alertSlice.ts';
 import { persistReducer } from 'redux-persist';
 import authenticateReducer from '@/features/auth/authenticateSlice.ts';
 import { api } from '@/services/api.ts';
@@ -19,6 +20,7 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
     counter: counterReducer,
+    alert: alertReducer,
     authenticate: persistReducer(authPersistConfig, authenticateReducer),
     [api.reducerPath]: api.reducer,
 });

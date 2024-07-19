@@ -2,11 +2,12 @@ import { Button, Form, Input, InputLabel, Title, Wrapper } from '@/assets/styles
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { authUserStore, logout } from '@/features/auth/authenticateSlice.ts';
 import { useNavigate } from 'react-router-dom';
-import ErrorAlert from '@/components/alerts/ErrorAlert.tsx';
 import Spinner from '@/components/spinners/Spinner.tsx';
 import { persistor } from '@/app/store.ts';
 import { useAppDispatch, useAppSelector } from '@/app/hooksStore.ts';
 import { PRIVATE_ROUTES } from '@/types';
+import { HiInformationCircle } from 'react-icons/hi';
+import { Alert } from 'flowbite-react';
 
 const LoginView = () => {
     const navigate = useNavigate();
@@ -78,7 +79,10 @@ const LoginView = () => {
                 {loading ? <Spinner /> : null}
                 
                 {serverError?.message ?
-                    <ErrorAlert message={serverError.message} />
+                    <Alert color="failure" icon={HiInformationCircle}>
+                        <span className="font-medium">Error!</span> {serverError.message}
+                    </Alert>
+                    /*<ErrorAlert message={} />*/
                     : null}
                 
                 <Button disabled={loading}>Login!</Button>

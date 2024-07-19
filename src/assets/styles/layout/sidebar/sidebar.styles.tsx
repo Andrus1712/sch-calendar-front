@@ -12,15 +12,16 @@ export const SidebarContainer = styled.div.withConfig({
     shouldForwardProp: (prop) => isPropValid(prop) && prop !== 'isOpen',
 })<SidebarProps>`
     width: ${({ isOpen }) => isOpen ? v.sidebarWidth : v.sidebarWidthClose};
-    background: ${color.primary};
+    background: ${color.white};
     transition: transform 1s ease, width 1s ease;
     overflow: hidden;
     color: whitesmoke;
-    height: 100%;
+    //height: 100%;
     display: flex;
     flex-direction: column;
+    z-index: 5;
 
-    box-shadow: 6px 2px 19px -1px rgba(126, 126, 126, 0.51);
+    box-shadow: 5px 2px 10px -1px rgba(126, 126, 126, 0.51);
     -webkit-box-shadow: 6px 2px 19px -1px rgba(126, 126, 126, 0.51);
     -moz-box-shadow: 6px 2px 19px -1px rgba(126, 126, 126, 0.51);
 
@@ -67,10 +68,10 @@ export const SidebarContainer = styled.div.withConfig({
     }
 
     header {
-            // height: ${v.headerHeight};
+        height: ${v.headerHeight};
         display: flex;
         align-items: center;
-        margin-bottom: ${v.lgSpacing};
+        margin-bottom: ${v.smSpacing};
         background: ${color.secondary};
         width: 100%;
         padding: ${v.smSpacing};
@@ -101,7 +102,7 @@ export const SidebarContainer = styled.div.withConfig({
 export const SItemsNav = styled.nav.withConfig({
     shouldForwardProp: (prop) => isPropValid(prop) && prop !== 'isOpen',
 })<SidebarProps>`
-    padding: ${v.smSpacing};
+        // padding: ${v.smSpacing};
     overflow-y: visible;
     overflow-x: hidden;
 
@@ -119,41 +120,47 @@ export const SItemsNav = styled.nav.withConfig({
     }
 
     ul {
-        width: 100%;
-        //border: 2px yellow solid;
-        padding-left: 0;
+        // width: 100%;
+        //padding-left: 0;
     }
 
     li {
         list-style: none;
         display: flex;
-        margin-bottom: ${v.mdSpacing};
+        margin-bottom: ${v.smSpacing};
         width: 100%;
         align-items: center;
 
-        .nav-link {
-            width: 100%;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            border-radius: ${v.mdSpacing};
-            background-color: ${color.primary};
-            color: ${color.textPrimary};
-        }
+    }
 
-        span {
-                /*margin-left: ${({ isOpen }) => isOpen ? v.mdSpacing : 'auto'};*/
-            opacity: ${({ isOpen }) => isOpen ? 1 : 0};
-            transition: all 1s ease;
-            white-space: nowrap;
-            width: ${({ isOpen }) => isOpen ? null : 0};
-        }
+    .nav-link {
+        width: 100%;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        border-radius: ${v.mdSpacing};
+            // background-color: ${color.primary};
+        color: ${color.textPrimary};
 
-        a:hover {
-            background-color: ${color.hover};
-            color: ${color.textHover};
-        }
+    }
+
+    .active {
+        background: ${color.hover};
+        color: ${color.textHover};
+    }
+
+    span {
+            /*margin-left: ${({ isOpen }) => isOpen ? v.mdSpacing : 'auto'};*/
+        opacity: ${({ isOpen }) => isOpen ? 1 : 0};
+        transition: opacity 0.3s ease;
+        white-space: nowrap;
+        width: ${({ isOpen }) => isOpen ? null : 0};
+    }
+
+    a:hover {
+        background-color: ${color.hover};
+        color: ${color.textHover};
     }
 `;
 

@@ -1,40 +1,31 @@
-import { SDashboard } from '@/assets/styles/pages/private/dashboard/dashboard.styles.ts';
-import { decrement, increment, incrementByAmountAsync } from '@/features/counter/counterSlice.ts';
-import { useAppDispatch, useAppSelector } from '@/app/hooksStore.ts';
+import { Card, Tabs, TabsRef } from 'flowbite-react';
 import FCalendar from '@/components/calendar/FCalendar.tsx';
+import { FaCalendarDays, FaCubes } from 'react-icons/fa6';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 const Dashboard = () => {
-    // The `state` arg is correctly typed as `RootState` already
-    const { value, status } = useAppSelector((state) => state.counter);
-    const dispatch = useAppDispatch();
+    const tabsRef = useRef<TabsRef>(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_activeTab, setActiveTab] = useState<number>(0);
+    
+    useLayoutEffect(() => {
+        tabsRef.current?.setActiveTab(1);
+    }, []);
     
     return (
-        <SDashboard>
-            
-            <div>
-                <button
-                    aria-label="Increment value"
-                    onClick={() => dispatch(increment())}
-                >
-                    Increment
-                </button>
-                <span>{status === 'loading' ? 'loading' : value}</span>
-                <button
-                    aria-label="Decrement value"
-                    onClick={() => dispatch(decrement())}
-                >
-                    Decrement
-                </button>
-                <button
-                    aria-label="Random value"
-                    onClick={() => dispatch(incrementByAmountAsync(Math.random()))}
-                >
-                    Random
-                </button>
-            </div>
-            <FCalendar />
-        </SDashboard>
-    );
+        <Card className="max-w-full">
+            <Tabs aria-label="Tabs with underline" variant="underline" ref={tabsRef}
+                  onActiveTabChange={(tab) => setActiveTab(tab)}>
+                <Tabs.Item title="Dashboard" icon={FaCubes}>
+                
+                </Tabs.Item>
+                <Tabs.Item title="Calendar" icon={FaCalendarDays}>
+                    <FCalendar />
+                </Tabs.Item>
+            </Tabs>
+        </Card>
+    )
+        ;
 };
 
 export default Dashboard;
