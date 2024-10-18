@@ -1,7 +1,7 @@
 {
   "name": "calendar-idea-react",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -28,6 +28,7 @@
     "date-fns": "^3.6.0",
     "flowbite": "^2.4.1",
     "flowbite-react": "^0.10.1",
+    "formik": "^2.4.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
@@ -39,7 +40,8 @@
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.6",
@@ -65,5 +67,9 @@
     "typescript": "^5.2.2",
     "typescript-eslint": "^7.14.1",
     "vite": "^5.2.0"
-  }
+  },
+  "main": "main.tsx",
+  "repository": "git@github.com:Andrus1712/sch-calendar-front.git",
+  "author": "Andres Calderon <acaldup@gmail.com>",
+  "license": "MIT"
 }

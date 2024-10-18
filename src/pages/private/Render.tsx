@@ -12,8 +12,8 @@ interface Props {
 }
 
 const Render = (props: Props) => {
-    const nameComponet = props.name as ObjectKey;
-    const DynamicComponent = privates[nameComponet];
+    const nameComponent = props.name as ObjectKey;
+    const DynamicComponent = privates[nameComponent];
     return <Suspense fallback={<div>Loading...</div>}>{<DynamicComponent />}</Suspense>;
 };
 export default Render;

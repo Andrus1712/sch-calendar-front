@@ -21,7 +21,7 @@ const FCalendar = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [openModal, setOpenModal] = useState(false);
     
-    const [deleteEvent, setDeteleteEvent] = useState<boolean>(false);
+    const [deleteEvent, setDeleteEvent] = useState<boolean>(false);
     
     // const [pollingInterval] = useState(100000);
     const { data: schedules, error, isLoading } = useGetAllSchedulesQuery(undefined);
@@ -65,11 +65,11 @@ const FCalendar = () => {
         if (confirmDelete) {
             if (currentEvent?.id) {
                 await deleteSchedule(currentEvent.id).unwrap();
-                setDeteleteEvent(false);
+                setDeleteEvent(false);
                 setOpenModal(false);
             }
         } else {
-            setDeteleteEvent(false);
+            setDeleteEvent(false);
         }
     };
     
@@ -88,10 +88,10 @@ const FCalendar = () => {
             {/*Component del modal*/}
             {currentEvent &&
                 <InfoEventModal openModal={openModal} setOpenModal={setOpenModal} currentEvent={currentEvent}
-                                deleteEvent={setDeteleteEvent} />
+                                deleteEvent={setDeleteEvent} />
             }
             
-            <DeleteAlert openModal={deleteEvent} setOpenModal={() => setDeteleteEvent(false)}
+            <DeleteAlert openModal={deleteEvent} setOpenModal={() => setDeleteEvent(false)}
                          setConfirm={handleConfirmDelete} />
             
             <FullCalendar

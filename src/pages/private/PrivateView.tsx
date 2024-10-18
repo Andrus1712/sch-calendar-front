@@ -1,4 +1,4 @@
-import RoutesPrivate from '@/pages/private/RoutesPrivate.tsx';
+import RoutesPrivate from '@/router/RoutesPrivate.tsx';
 import Layout from '@/layout/Layout.tsx';
 
 const PrivateView = () => {

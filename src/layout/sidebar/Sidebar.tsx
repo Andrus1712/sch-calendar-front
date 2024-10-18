@@ -32,9 +32,9 @@ const Sidebar = ({ sidebarOpen }: SidebarProps) => {
                                 <FaHome className="nav-icon" />
                                 <span>Home</span>
                             </NavLink>
-                            <NavLink to="users" className="nav-link">
+                            <NavLink to="clients" className="nav-link">
                                 <FaUser className="nav-icon" />
-                                <span>Users</span>
+                                <span>Clients</span>
                             </NavLink>
                             <NavLink to="config" className="nav-link">
                                 <FaCog className="nav-icon" />

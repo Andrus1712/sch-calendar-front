@@ -19,10 +19,9 @@ const NewEventForm = ({ isOpen, setIsOpen }: Props) => {
     
     const [date, setDate] = useState<Date | null>(new Date());
     
-    const handleChange = (date: Date) => {
-        setDate(date);
+    const handleChange = (date: Date | null) => {
+        setDate(date); // Handle null date gracefully
     };
-    
     
     const [createSchedule, {
         isLoading: createScheduleIsLoading,
@@ -35,13 +34,14 @@ const NewEventForm = ({ isOpen, setIsOpen }: Props) => {
         try {
             let dateFormat;
             if (date) {
-                dateFormat = format(date.toLocaleDateString(), 'y-MM-dd');
+                dateFormat = format(date, 'y-MM-dd');
+                console.log(dateFormat);
                 await createSchedule({
                     title,
                     description,
                     startTime: `${dateFormat} ${startTime}`,
                     endTime: `${dateFormat} ${endTime}`,
-                    status: "PENDING",
+                    status: 'PENDING',
                     scheduleTypeId: 1,
                 }).unwrap();
                 setIsOpen(false);
@@ -89,7 +89,7 @@ const NewEventForm = ({ isOpen, setIsOpen }: Props) => {
                             </Label>
                             <Datepicker
                                 id="start-date"
-                                onSelectedDateChanged={handleChange}
+                                onChange={handleChange}
                                 minDate={new Date()}
                             />
                             <p>Selected
