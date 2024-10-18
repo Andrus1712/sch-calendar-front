@@ -3,6 +3,7 @@ import { ISchedule } from '@/features/schedule/scheduleTypes.ts';
 import { FaPencil, FaTrash } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
+import { useUpdateScheduleMutation } from '@/features/schedule/scheduleApi.ts';
 
 interface ModalProps {
     openModal: boolean,
@@ -23,6 +24,7 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
     const [date, setDate] = useState<Date | null>(new Date());
     const [typeSchedule, setTypeSchedule] = useState<number>(0);
     const [status, setStatus] = useState<string>("");
+    const [updateSchedule, { isLoading: isUpdating }] = useUpdateScheduleMutation();
     
     useEffect(() => {
         if (currentEvent) {
@@ -54,8 +56,22 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
         setDate(date);
     };
     
-    const sendEditEvent = () => {
-    
+    const sendEditEvent = async () => {
+        const newSchedule: Partial<ISchedule> = {
+            title: title,
+            description: description,
+            startTime: startTime,
+            endTime: endTime,
+            status: status,
+            scheduleTypeId: typeSchedule,
+            scheduleTypeDescription: null,
+        };
+        try {
+            await updateSchedule({ ...newSchedule, id: currentEvent.id }).unwrap();
+            console.log('Schedule updated successfully');
+        } catch (error) {
+            console.error('Failed to update schedule', error);
+        }
     }
     
     return (
@@ -148,6 +164,10 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
                                     <option value={'PENDING'}>PENDING</option>
                                 </Select>
                             </div>
+                        </div>
+                        <div>
+                            <h2>Update Schedule</h2>
+                            {isUpdating ? 'Updating...' : 'Update Schedule'}
                         </div>
                     </div>
                     :

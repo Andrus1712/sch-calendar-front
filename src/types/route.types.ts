@@ -11,4 +11,10 @@ export const PRIVATE_ROUTES = {
             permission: 'view.dashboard',
         },
     },
+    CUSTOMERS: {
+        INDEX: {
+            path: 'customers',
+            permission: 'view.customers',
+        }
+    }
 };
