@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route } from 'react-router-dom';
-import { PRIVATE_ROUTES, PUBLIC_ROUTES } from '../types';
+import { PRIVATE_ROUTES, PUBLIC_ROUTES } from '@/types';
 import HomeView from '@/pages/public/HomeView.tsx';
 import LoginView from '@/pages/auth/LoginView.tsx';
 import RoutesWithNotFound from '@/router/routesWithNotFound.tsx';

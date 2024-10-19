@@ -23,9 +23,14 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
     const [endTime, setEndTime] = useState<string>(format(new Date(), 'HH:mm:ss'));
     const [date, setDate] = useState<Date | null>(new Date());
     const [typeSchedule, setTypeSchedule] = useState<number>(0);
+<<<<<<< HEAD
     const [status, setStatus] = useState<string>('');
     
     const [updateSchedule] = useUpdateScheduleMutation();
+=======
+    const [status, setStatus] = useState<string>("");
+    const [updateSchedule, { isLoading: isUpdating }] = useUpdateScheduleMutation();
+>>>>>>> 5a26f1d49f1e1fa233addc83e538cccc894273df
     
     useEffect(() => {
         if (currentEvent) {
@@ -58,6 +63,7 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
     };
     
     const sendEditEvent = async () => {
+<<<<<<< HEAD
         if (currentEvent.id) {
             let dateFormat;
             if (date) {
@@ -81,6 +87,24 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
             
         }
     };
+=======
+        const newSchedule: Partial<ISchedule> = {
+            title: title,
+            description: description,
+            startTime: startTime,
+            endTime: endTime,
+            status: status,
+            scheduleTypeId: typeSchedule,
+            scheduleTypeDescription: null,
+        };
+        try {
+            await updateSchedule({ ...newSchedule, id: currentEvent.id }).unwrap();
+            console.log('Schedule updated successfully');
+        } catch (error) {
+            console.error('Failed to update schedule', error);
+        }
+    }
+>>>>>>> 5a26f1d49f1e1fa233addc83e538cccc894273df
     
     return (
         <Modal show={openModal} onClose={() => setOpenModal(false)}>
@@ -172,6 +196,10 @@ const InfoEventModal = ({ openModal, setOpenModal, currentEvent, deleteEvent }: 
                                     <option value={'PENDING'}>PENDING</option>
                                 </Select>
                             </div>
+                        </div>
+                        <div>
+                            <h2>Update Schedule</h2>
+                            {isUpdating ? 'Updating...' : 'Update Schedule'}
                         </div>
                     </div>
                     :
