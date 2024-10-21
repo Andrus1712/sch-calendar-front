@@ -1,26 +1,21 @@
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Card, Label, TextInput } from 'flowbite-react';
 import { HiMail } from 'react-icons/hi';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Container } from '@/assets/styles/pages/private/container.styles.ts';
 import { AiOutlineLoading } from 'react-icons/ai';
-import { useCreateClientMutation } from '@/features/client/clientApi.ts';
+import { Container } from '@/assets/styles/pages/private/container.styles.ts';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 import { IClient } from '@/features/client/clientTypes.ts';
-import { useNavigate } from 'react-router-dom';
+import { useUpdateClientMutation } from '@/features/client/clientApi.ts';
 
-// firstName
-// lastName
-// email
-// phone
-// birthDate
 
-function initialValues() {
+function initialValues(data: IClient) {
     return {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        birthDate: '',
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
+        birthDate: data.birthDate,
     };
 }
 
@@ -34,18 +29,19 @@ function validationSchema() {
     });
 }
 
-function NewClient() {
-    
-    const [createClient, response] = useCreateClientMutation();
+function EditClient() {
+    const { state } = useLocation();
+    const { id } = useParams<{ id: any }>();
     
     const navigate = useNavigate();
+    const [updateClient, response] = useUpdateClientMutation();
     
     const formik = useFormik({
-        initialValues: initialValues(),
+        initialValues: initialValues(state.data),
         validationSchema,
         onSubmit: async (values) => {
             const client: Partial<IClient> = values;
-            await createClient(client).unwrap().then(() => {
+            await updateClient({ id, ...client }).unwrap().then(() => {
                 navigate('..', { relative: 'path' });
             });
         },
@@ -55,6 +51,10 @@ function NewClient() {
     const goBack = () => {
         navigate('..', { relative: 'path' });
     };
+    
+    if (!state) {
+        return <h2>Info client not found</h2>;
+    }
     
     return (
         <Container>
@@ -68,6 +68,7 @@ function NewClient() {
                             id="firstName"
                             type="text"
                             sizing="md"
+                            value={formik.values.firstName}
                             onChange={(value) => formik.setFieldValue('firstName', value.target.value)}
                             color={formik.errors.firstName ? 'failure' : 'gray'}
                             helperText={formik.errors.firstName &&
@@ -82,6 +83,7 @@ function NewClient() {
                             id="lastName"
                             type="text"
                             sizing="md"
+                            value={formik.values.lastName}
                             onChange={(value) => formik.setFieldValue('lastName', value.target.value)}
                             color={formik.errors.lastName ? 'failure' : 'gray'}
                             helperText={formik.errors.lastName &&
@@ -97,6 +99,7 @@ function NewClient() {
                             type="email"
                             sizing="md"
                             icon={HiMail}
+                            value={formik.values.email}
                             onChange={(value) => formik.setFieldValue('email', value.target.value)}
                             color={formik.errors.email ? 'failure' : 'gray'}
                             helperText={formik.errors.email &&
@@ -111,6 +114,7 @@ function NewClient() {
                             id="phone"
                             type="text"
                             sizing="md"
+                            value={formik.values.phone}
                             onChange={(value) => formik.setFieldValue('phone', value.target.value)}
                             color={formik.errors.phone ? 'failure' : 'gray'}
                             helperText={formik.errors.phone &&
@@ -124,6 +128,7 @@ function NewClient() {
                         <TextInput
                             id="birthDate" type="date"
                             sizing="md"
+                            value={formik.values.birthDate}
                             color={formik.errors.birthDate ? 'failure' : 'gray'}
                             onChange={(value) => formik.setFieldValue('birthDate', value.target.value)}
                             helperText={formik.errors.birthDate &&
@@ -145,4 +150,4 @@ function NewClient() {
     );
 }
 
-export default NewClient;
+export default EditClient;

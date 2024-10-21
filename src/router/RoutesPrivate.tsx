@@ -5,6 +5,7 @@ import Clients from '@/pages/private/clients/Clients.tsx';
 import NewClient from '@/pages/private/clients/NewClient.tsx';
 import { PRIVATE_ROUTES } from '@/types';
 import Customers from '@/pages/private/Customers/Customers.tsx';
+import EditClient from '@/pages/private/clients/EditClient.tsx';
 
 
 const RoutesPrivate = () => {
@@ -18,6 +19,7 @@ const RoutesPrivate = () => {
             <Route path={`clients/*`}>
                 <Route index element={<Clients />} />
                 <Route path={`new`} element={<NewClient />} />
+                <Route path={`:id`} element={<EditClient />} />
             </Route>
             <Route
                 key={2}

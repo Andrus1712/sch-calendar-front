@@ -21,6 +21,6 @@ export const SMain = styled.main`
 
 export const SMainContent = styled.div`
     padding: calc(${v.smSpacing} * 2);
-    flex: 1;
+    //flex: 1;
     //display: flex;
 `;

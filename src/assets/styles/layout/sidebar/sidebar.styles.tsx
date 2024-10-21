@@ -16,7 +16,7 @@ export const SidebarContainer = styled.div.withConfig({
     transition: transform 1s ease, width 1s ease;
     overflow: hidden;
     color: whitesmoke;
-    //height: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     z-index: 5;
